@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .hearts {
+            font-size: 60px;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 32px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .name {
+            color: #ff1744;
+            font-size: 42px;
+            font-weight: bold;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .question {
+            color: #d81b60;
+            font-size: 36px;
+            margin-bottom: 50px;
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            padding: 50px;
+            min-height: 200px;
+        }
+
+        .btn {
+            padding: 20px 50px;
+            font-size: 24px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-family: 'Georgia', serif;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 30px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #f44336, #c62828);
+            color: white;
+            transition: transform 0.2s;
+        }
+
+        .response {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: #fff0f5;
+            border-radius: 15px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .response h2 {
+            color: #d81b60;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .response p {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .celebration {
+            font-size: 40px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="hearts">💕✨💖</div>
+        
+        <h1>Hi</h1>
+        <div class="name">ALLENA MENDO</div>
+        <div class="question">WILL YOU BE MY VALENTINE?</div>
+
+        <div class="buttons">
+            <button class="btn btn-yes" onclick="handleYes()">YES! 💖</button>
+            <button class="btn btn-no" onclick="handleNo()">NO 💔</button>
+        </div>
+
+        <div id="response" class="response"></div>
+    </div>
+
+    <script>
+        const noButton = document.querySelector('.btn-no');
+        const buttonsContainer = document.querySelector('.buttons');
+        let noButtonMoved = false;
+        
+        noButton.addEventListener('mouseenter', function() {
+            // Get container boundaries
+            const containerRect = buttonsContainer.getBoundingClientRect();
+            const buttonRect = this.getBoundingClientRect();
+            
+            // Calculate max movement within container
+            const maxX = containerRect.width - buttonRect.width - 100;
+            const maxY = containerRect.height - buttonRect.height - 100;
+            
+            // Generate random position within container
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * (maxY / 2)) - 50;
+            
+            // Apply transform to move button
+            this.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        });
+        
+        function handleYes() {
+            const response = document.getElementById('response');
+            response.innerHTML = `
+                <h2>🎉 YES! 🎉</h2>
+                <p>You just made me the happiest person in the world!</p>
+                <p>I can't wait to spend Valentine's Day with you! ❤️</p>
+                <div class="celebration">🥳💕🎊💖✨🌹</div>
+            `;
+            response.style.display = 'block';
+            
+            // Hide buttons
+            document.querySelector('.buttons').style.display = 'none';
+        }
+
+        function handleNo() {
+            const response = document.getElementById('response');
+            response.innerHTML = `
+                <h2>😢 Oh no...</h2>
+                <p>That's okay, I understand. But you'll always be special to me! 💔</p>
+                <p>Maybe another time? 🌹</p>
+            `;
+            response.style.display = 'block';
+            
+            // Hide buttons
+            document.querySelector('.buttons').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
